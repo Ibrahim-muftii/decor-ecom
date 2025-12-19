@@ -1,0 +1,157 @@
+.navbar {
+    position: fixed;
+    top: 0;
+    left: 0;
+    right: 0;
+    width: 100%;
+    height: 80px;
+    /* Define fixed height for layout stability */
+    z-index: 1000;
+    transition: all 0.3s ease;
+}
+
+/* Background Layer specifically for blur and opacity */
+.backgroundLayer {
+    position: absolute;
+    top: 0;
+    left: 0;
+    width: 100%;
+    height: 100%;
+    background: transparent;
+    opacity: 0;
+    backdrop-filter: none;
+    transition: all 0.4s ease;
+    z-index: 0;
+}
+
+.scrolledBackground {
+    background: rgba(255, 255, 255, 0.15);
+    /* White with 15% opacity */
+    opacity: 1;
+    backdrop-filter: blur(12px);
+    /* Blur effect */
+    -webkit-backdrop-filter: blur(12px);
+    border-bottom: 1px solid rgba(255, 255, 255, 0.1);
+    box-shadow: 0 4px 30px rgba(0, 0, 0, 0.05);
+    /* Optional subtle shadow */
+}
+
+/* Content Container */
+.navContainer {
+    position: relative;
+    z-index: 1;
+    /* Sit above the background layer */
+    display: flex;
+    justify-content: space-between;
+    align-items: center;
+    width: 100%;
+    height: 100%;
+    padding: 0 2rem;
+    pointer-events: auto;
+    /* Ensure updated from previous 'none' */
+}
+
+/* CRITICAL: HIDE ON MOBILE */
+@media screen and (max-width: 768px) {
+    .navbar {
+        display: none !important;
+        visibility: hidden !important;
+        pointer-events: none !important;
+    }
+}
+
+/* Logo */
+.logo {
+    display: flex;
+    align-items: center;
+    gap: 10px;
+    text-decoration: none;
+}
+
+.logoIcon {
+    width: 40px;
+    height: 40px;
+    background: linear-gradient(135deg, var(--accent) 0%, var(--botanical-green) 100%);
+    border-radius: 12px;
+    display: flex;
+    align-items: center;
+    justify-content: center;
+    color: #fff;
+    font-size: 1.1rem;
+    box-shadow: 0 4px 12px rgba(16, 185, 129, 0.3);
+}
+
+.logoText {
+    font-size: 1.3rem;
+    font-weight: 800;
+    color: var(--botanical-green);
+    letter-spacing: -0.5px;
+}
+
+/* Nav Links */
+.navLinks {
+    display: flex;
+    align-items: center;
+    gap: 2rem;
+}
+
+.link {
+    font-size: 0.95rem;
+    font-weight: 600;
+    color: var(--text-secondary);
+    transition: color 0.2s;
+    position: relative;
+    text-decoration: none;
+}
+
+.link:hover {
+    color: var(--accent);
+}
+
+/* Nav Actions */
+.navActions {
+    display: flex;
+    align-items: center;
+    gap: 0.75rem;
+}
+
+.iconBtn {
+    position: relative;
+    width: 44px;
+    height: 44px;
+    border-radius: 12px;
+    background: rgba(255, 255, 255, 0.5);
+    display: flex;
+    align-items: center;
+    justify-content: center;
+    color: var(--botanical-green);
+    font-size: 1.1rem;
+    transition: all 0.2s;
+    border: 1px solid rgba(255, 255, 255, 0.4);
+    text-decoration: none;
+}
+
+.iconBtn:hover {
+    background: var(--accent);
+    color: #fff;
+    border-color: transparent;
+    transform: translateY(-2px);
+    box-shadow: 0 4px 12px rgba(16, 185, 129, 0.2);
+}
+
+.badge {
+    position: absolute;
+    top: -4px;
+    right: -4px;
+    background: var(--botanical-green);
+    color: #fff;
+    font-size: 0.7rem;
+    font-weight: 700;
+    width: 18px;
+    height: 18px;
+    border-radius: 50%;
+    display: flex;
+    align-items: center;
+    justify-content: center;
+    border: 2px solid #fff;
+}

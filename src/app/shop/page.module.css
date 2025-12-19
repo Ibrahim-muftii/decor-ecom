@@ -1,0 +1,243 @@
+.container {
+    padding: 6rem 2rem 8rem;
+    max-width: 1400px;
+    margin: 0 auto;
+}
+
+/* Header */
+.header {
+    text-align: center;
+    margin-bottom: 3rem;
+}
+
+.title {
+    font-size: 2.5rem;
+    font-weight: 800;
+    color: var(--text-primary);
+    margin-bottom: 0.5rem;
+}
+
+.subtitle {
+    font-size: 1rem;
+    color: var(--text-secondary);
+}
+
+/* Mobile Filter Button */
+.mobileFilterBtn {
+    display: none;
+    width: 100%;
+    padding: 14px;
+    background: #fff;
+    border: 1px solid #e5e7eb;
+    border-radius: 12px;
+    font-size: 0.95rem;
+    font-weight: 600;
+    color: var(--text-primary);
+    cursor: pointer;
+    margin-bottom: 1.5rem;
+    gap: 8px;
+    align-items: center;
+    justify-content: center;
+}
+
+@media (max-width: 900px) {
+    .mobileFilterBtn {
+        display: flex;
+    }
+}
+
+/* Content Layout */
+.content {
+    display: grid;
+    grid-template-columns: 220px 1fr;
+    gap: 2rem;
+}
+
+@media (max-width: 900px) {
+    .content {
+        grid-template-columns: 1fr;
+    }
+}
+
+/* Sidebar */
+.sidebar {
+    background: #fff;
+    border-radius: 16px;
+    padding: 1.5rem;
+    border: 1px solid #f3f4f6;
+    height: fit-content;
+    position: sticky;
+    top: 100px;
+}
+
+@media (max-width: 900px) {
+    .sidebar {
+        position: fixed;
+        top: 0;
+        left: 0;
+        right: 0;
+        bottom: 0;
+        z-index: 1001;
+        border-radius: 0;
+        transform: translateX(-100%);
+        transition: transform 0.3s ease;
+        overflow-y: auto;
+    }
+
+    .showSidebar {
+        transform: translateX(0);
+    }
+}
+
+.sidebarHeader {
+    display: flex;
+    justify-content: space-between;
+    align-items: center;
+    margin-bottom: 1.5rem;
+    padding-bottom: 1rem;
+    border-bottom: 1px solid #f3f4f6;
+}
+
+.sidebarHeader h3 {
+    font-size: 1rem;
+    font-weight: 700;
+    color: var(--text-primary);
+}
+
+.closeBtn {
+    display: none;
+    background: none;
+    border: none;
+    font-size: 1.2rem;
+    color: var(--text-muted);
+    cursor: pointer;
+}
+
+@media (max-width: 900px) {
+    .closeBtn {
+        display: block;
+    }
+}
+
+/* Filter Groups */
+.filterGroup {
+    margin-bottom: 1.5rem;
+}
+
+.filterTitle {
+    font-size: 0.75rem;
+    font-weight: 700;
+    color: var(--text-muted);
+    margin-bottom: 0.75rem;
+    text-transform: uppercase;
+    letter-spacing: 1px;
+}
+
+.filterOption {
+    display: block;
+    width: 100%;
+    padding: 10px 12px;
+    border: none;
+    background: transparent;
+    text-align: left;
+    font-size: 0.9rem;
+    color: var(--text-secondary);
+    cursor: pointer;
+    border-radius: 8px;
+    transition: all 0.2s;
+    margin-bottom: 2px;
+}
+
+.filterOption:hover {
+    background: #f9fafb;
+    color: var(--text-primary);
+}
+
+.filterOption.active {
+    background: var(--accent);
+    color: #fff;
+    font-weight: 600;
+}
+
+/* Main Content */
+.main {
+    display: flex;
+    flex-direction: column;
+    gap: 1.5rem;
+}
+
+/* Toolbar */
+.toolbar {
+    display: flex;
+    justify-content: space-between;
+    align-items: center;
+    flex-wrap: wrap;
+    gap: 1rem;
+}
+
+.resultCount {
+    font-size: 0.85rem;
+    color: var(--text-muted);
+}
+
+.sortSelect {
+    padding: 10px 14px;
+    border-radius: 10px;
+    border: 1px solid #e5e7eb;
+    background: #fff;
+    font-size: 0.9rem;
+    color: var(--text-primary);
+    cursor: pointer;
+    outline: none;
+}
+
+.sortSelect:focus {
+    border-color: var(--accent);
+}
+
+/* Product Grid */
+.grid {
+    display: grid;
+    grid-template-columns: repeat(auto-fill, minmax(260px, 1fr));
+    gap: 1.5rem;
+}
+
+/* Pagination */
+.pagination {
+    display: flex;
+    justify-content: center;
+    align-items: center;
+    gap: 0.5rem;
+    margin-top: 2rem;
+}
+
+.pageBtn {
+    width: 40px;
+    height: 40px;
+    border-radius: 10px;
+    border: 1px solid #e5e7eb;
+    background: #fff;
+    color: var(--text-primary);
+    font-weight: 600;
+    cursor: pointer;
+    transition: all 0.2s;
+    display: flex;
+    align-items: center;
+    justify-content: center;
+}
+
+.pageBtn:hover:not(:disabled) {
+    border-color: var(--accent);
+    color: var(--accent);
+}
+
+.pageBtn:disabled {
+    opacity: 0.4;
+    cursor: not-allowed;
+}
+
+.activePage {
+    background: var(--accent) !important;
+    color: #fff !important;
+    border-color: var(--accent) !important;
+}

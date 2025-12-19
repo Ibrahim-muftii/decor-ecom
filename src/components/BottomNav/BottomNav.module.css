@@ -1,0 +1,162 @@
+/* Container to position the fixed navbar */
+.navContainer {
+    position: fixed;
+    bottom: 0;
+    left: 0;
+    right: 0;
+    display: flex;
+    justify-content: center;
+    z-index: 1000;
+    pointer-events: none;
+    filter: drop-shadow(0 -5px 10px rgba(0, 0, 0, 0.05));
+}
+
+/* CRITICAL: HIDE ON DESKTOP */
+@media screen and (min-width: 769px) {
+    .navContainer {
+        display: none !important;
+        visibility: hidden !important;
+        pointer-events: none !important;
+    }
+}
+
+/* The Navbar Bar */
+.navbar {
+    pointer-events: auto;
+    position: relative;
+    background: #ffffff;
+    padding: 0;
+    height: 80px;
+    width: 100%;
+    max-width: 100%;
+    display: flex;
+    align-items: center;
+    border-top-left-radius: 0;
+    border-top-right-radius: 0;
+}
+
+/* Items Grid */
+.itemsContainer {
+    position: relative;
+    display: flex;
+    width: 100%;
+    height: 100%;
+    justify-content: space-between;
+    align-items: flex-end;
+    padding-bottom: 20px;
+    box-sizing: border-box;
+    z-index: 2;
+}
+
+.navItem {
+    flex: 1;
+    display: flex;
+    flex-direction: column;
+    align-items: center;
+    justify-content: flex-end;
+    height: 100%;
+    color: #9ca3af;
+    text-decoration: none;
+    transition: all 0.3s ease;
+    position: relative;
+    cursor: pointer;
+    -webkit-tap-highlight-color: transparent;
+}
+
+.iconWrapper {
+    height: 24px;
+    display: flex;
+    align-items: center;
+    justify-content: center;
+    transition: transform 0.3s ease, opacity 0.3s ease;
+    margin-bottom: 4px;
+}
+
+.icon {
+    font-size: 1.5rem;
+    stroke-width: 2px;
+}
+
+/* Hide inactive icon */
+.navItem.active .iconWrapper {
+    transform: translateY(-250%);
+    opacity: 0;
+}
+
+.label {
+    font-size: 0.75rem;
+    font-weight: 600;
+    opacity: 0;
+    transform: translateY(20px);
+    transition: all 0.3s ease;
+    position: absolute;
+    bottom: 22px;
+    color: #1f2937;
+}
+
+.showLabel {
+    opacity: 1;
+    transform: translateY(0);
+}
+
+/* --- The Moving Indicator (The Notch + Circle) --- */
+.activeIndicatorContainer {
+    position: absolute;
+    top: -28px;
+    left: 0;
+    width: 20%;
+    height: 100px;
+    pointer-events: none;
+    transition: transform 0.4s cubic-bezier(0.2, 0.8, 0.2, 1);
+    z-index: 1;
+    display: flex;
+    justify-content: center;
+}
+
+/* The Green Active Circle */
+.activeCircle {
+    width: 56px;
+    height: 56px;
+    background: #10b981;
+    border-radius: 50%;
+    display: flex;
+    align-items: center;
+    justify-content: center;
+    box-shadow: 0 4px 15px rgba(16, 185, 129, 0.4);
+    z-index: 10;
+    border: 4px solid #ffffff;
+}
+
+.activeIcon {
+    color: #ffffff;
+    font-size: 1.6rem;
+}
+
+/* Curve Geometry */
+:root {
+    --curve-color: #ffffff;
+}
+
+.notchCurveLeft,
+.notchCurveRight {
+    position: absolute;
+    top: 24px;
+    width: 20px;
+    height: 20px;
+    background: transparent;
+    border-radius: 50%;
+    z-index: 5;
+    pointer-events: none;
+}
+
+.notchCurveLeft {
+    right: 52%;
+    margin-right: -4px;
+    box-shadow: 10px 10px 0 0px #ffffff;
+}
+
+.notchCurveRight {
+    left: 52%;
+    margin-left: -4px;
+    box-shadow: -10px 10px 0 0px #ffffff;
+}

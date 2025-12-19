@@ -1,0 +1,75 @@
+.container {
+    padding: 2rem;
+    max-width: 1000px;
+    margin: 0 auto;
+}
+
+.title {
+    font-size: 2rem;
+    margin-bottom: 2rem;
+    text-align: center;
+}
+
+.grid {
+    display: grid;
+    grid-template-columns: 3fr 2fr;
+    gap: 3rem;
+}
+
+@media (max-width: 768px) {
+    .grid {
+        grid-template-columns: 1fr;
+    }
+}
+
+.sectionTitle {
+    font-size: 1.2rem;
+    margin-bottom: 1.5rem;
+    color: var(--text-secondary);
+}
+
+.form {
+    display: flex;
+    flex-direction: column;
+    gap: 1.5rem;
+}
+
+.row {
+    display: flex;
+    gap: 1.5rem;
+}
+
+.summaryCard {
+    background: var(--glass-bg);
+    border: 1px solid var(--glass-border);
+    padding: 2rem;
+    border-radius: 20px;
+    backdrop-filter: blur(12px);
+}
+
+.lineItems {
+    margin-bottom: 2rem;
+    display: flex;
+    flex-direction: column;
+    gap: 1rem;
+}
+
+.item {
+    display: flex;
+    justify-content: space-between;
+    color: var(--text-secondary);
+}
+
+.totalRow {
+    display: flex;
+    justify-content: space-between;
+    margin-bottom: 2rem;
+    padding-top: 1rem;
+    border-top: 1px solid rgba(255, 255, 255, 0.1);
+    font-weight: 700;
+    font-size: 1.2rem;
+}
+
+.totalAmount {
+    color: var(--accent);
+}
