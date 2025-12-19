@@ -238,7 +238,7 @@ export default function ProductDetails() {
                             category={p.category}
                             price={p.price}
                             discountPrice={p.discountPrice}
-                            imageUrl={p.image_url}
+                            image_url={p.image_url}
                             rating={p.rating}
                         />
                     ))}

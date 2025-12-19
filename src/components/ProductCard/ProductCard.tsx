@@ -16,12 +16,13 @@ interface ProductProps {
     rating?: number;
 }
 
-const ProductCard = ({ product, id, name, category, price, discountPrice, imageUrl, rating }: { product?: ProductProps } & Partial<ProductProps>) => {
+const ProductCard = ({ product, id, name, category, price, discountPrice, image_url, rating }: { product?: ProductProps } & Partial<ProductProps>) => {
     // Handle both prop patterns
-    const item = product || { id, name, category, price, discountPrice, image_url: imageUrl, rating };
+    const item = product || { id, name, category, price, discountPrice, image_url, rating };
 
-    const displayPrice = item.discountPrice || item.price;
-    const hasDiscount = item.discountPrice && item.discountPrice < item.price;
+    const itemPrice = item.price || 0;
+    const displayPrice = item.discountPrice || itemPrice;
+    const hasDiscount = item.discountPrice && item.discountPrice < itemPrice;
 
     return (
         <div className={styles.cardWrapper}>
@@ -32,7 +33,7 @@ const ProductCard = ({ product, id, name, category, price, discountPrice, imageU
                 {hasDiscount && (
                     <div className={styles.badge}>
                         <FaLeaf className={styles.leafIcon} />
-                        <span>Save {Math.round((1 - item.discountPrice! / item.price) * 100)}%</span>
+                        <span>Save {Math.round((1 - item.discountPrice! / item.price!) * 100)}%</span>
                     </div>
                 )}
 
@@ -65,7 +66,7 @@ const ProductCard = ({ product, id, name, category, price, discountPrice, imageU
                     <div className={styles.footer}>
                         <div className={styles.priceContainer}>
                             {hasDiscount && (
-                                <span className={styles.originalPrice}>${item.price.toFixed(2)}</span>
+                                <span className={styles.originalPrice}>${item.price?.toFixed(2)}</span>
                             )}
                             <span className={styles.price}>${displayPrice?.toFixed(2)}</span>
                         </div>

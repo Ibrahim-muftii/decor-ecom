@@ -1,6 +1,6 @@
 'use client';
 
-import React, { useState, useMemo } from 'react';
+import React, { useState, useMemo, Suspense } from 'react';
 import { useSearchParams } from 'next/navigation';
 import { FaFilter, FaTimes, FaChevronLeft, FaChevronRight } from 'react-icons/fa';
 import ProductCard from '@/components/ProductCard/ProductCard';
@@ -34,7 +34,7 @@ const SORT_OPTIONS = [
 ];
 const ITEMS_PER_PAGE = 6;
 
-export default function Shop() {
+function ShopContent() {
     const searchParams = useSearchParams();
     const initialCategory = searchParams?.get('category') || 'All';
 
@@ -174,7 +174,7 @@ export default function Shop() {
                                 category={product.category}
                                 price={product.price}
                                 discountPrice={product.discountPrice}
-                                imageUrl={product.image_url}
+                                image_url={product.image_url}
                                 rating={product.rating}
                             />
                         ))}
@@ -213,5 +213,13 @@ export default function Shop() {
                 </main>
             </div>
         </div>
+    );
+}
+
+export default function Shop() {
+    return (
+        <Suspense fallback={<div className={styles.loading}>Loading...</div>}>
+            <ShopContent />
+        </Suspense>
     );
 }

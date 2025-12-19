@@ -122,7 +122,7 @@ export default function Home() {
               category={product.category}
               price={product.price}
               discountPrice={product.discountPrice}
-              imageUrl={product.image_url}
+              image_url={product.image_url}
               rating={product.rating}
             />
           ))}
@@ -156,7 +156,7 @@ export default function Home() {
               category={product.category}
               price={product.price}
               discountPrice={product.discountPrice}
-              imageUrl={product.image_url}
+              image_url={product.image_url}
               rating={product.rating}
             />
           ))}

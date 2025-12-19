@@ -1,67 +1,71 @@
 :root {
-  /* Botanical Green Theme */
-  --accent: #10b981;
-  /* Emerald */
-  --accent-light: #34d399;
-  --accent-dark: #059669;
-  --botanical-green: #064e3b;
-  /* Deep geometric green */
+	/* Botanical Green Theme */
+	--accent: #10b981;
+	/* Emerald */
+	--accent-light: #34d399;
+	--accent-dark: #059669;
+	--botanical-green: #064e3b;
+	/* Deep geometric green */
 
-  /* Neutral / Glass Palette */
-  --bg-gradient-start: #f0fdf4;
-  /* Mint white */
-  --bg-gradient-end: #dcfce7;
-  /* Pale green */
-  --glass-bg: rgba(255, 255, 255, 0.65);
-  --glass-border: rgba(255, 255, 255, 0.5);
-  --glass-shadow: 0 8px 32px 0 rgba(16, 185, 129, 0.1);
+	/* Neutral / Glass Palette */
+	--bg-gradient-start: #f0fdf4;
+	/* Mint white */
+	--bg-gradient-end: #dcfce7;
+	/* Pale green */
+	--glass-bg: rgba(255, 255, 255, 0.65);
+	--glass-border: rgba(255, 255, 255, 0.5);
+	--glass-shadow: 0 8px 32px 0 rgba(16, 185, 129, 0.1);
 
-  /* Text */
-  --text-primary: #064e3b;
-  /* Dark green text for softer contrast */
-  --text-secondary: #047857;
-  --text-muted: #6ee7b7;
+	/* Text */
+	--text-primary: #064e3b;
+	/* Dark green text for softer contrast */
+	--text-secondary: #047857;
+	--text-muted: #6ee7b7;
 
-  --font-family: 'Inter', system-ui, -apple-system, sans-serif;
+	--font-family: "Inter", system-ui, -apple-system, sans-serif;
 }
 
 * {
-  box-sizing: border-box;
-  padding: 0;
-  margin: 0;
+	box-sizing: border-box;
+	padding: 0;
+	margin: 0;
 }
 
 body {
-  /* Green/White Gradient Background */
-  background: linear-gradient(135deg, var(--bg-gradient-start) 0%, #ffffff 50%, var(--bg-gradient-end) 100%);
-  background-attachment: fixed;
-  /* Parallax-like effect */
-  color: var(--text-primary);
-  font-family: var(--font-family);
-  min-height: 100vh;
-  -webkit-font-smoothing: antialiased;
-  overflow-x: hidden;
+	/* Green/White Gradient Background */
+	background: linear-gradient(135deg, var(--bg-gradient-start) 0%, #ffffff 50%, var(--bg-gradient-end) 100%);
+	background-attachment: fixed;
+	/* Parallax-like effect */
+	color: var(--text-primary);
+	font-family: var(--font-family);
+	min-height: 100vh;
+	-webkit-font-smoothing: antialiased;
+	overflow-x: hidden;
+}
+
+.backdrop-blur-bg {
+	backdrop-filter: blur(12px);
 }
 
 a {
-  text-decoration: none;
-  color: inherit;
+	text-decoration: none;
+	color: inherit;
 }
 
 /* Scrollbar styling */
 ::-webkit-scrollbar {
-  width: 8px;
+	width: 8px;
 }
 
 ::-webkit-scrollbar-track {
-  background: transparent;
+	background: transparent;
 }
 
 ::-webkit-scrollbar-thumb {
-  background: var(--accent-light);
-  border-radius: 4px;
+	background: var(--accent-light);
+	border-radius: 4px;
 }
 
 ::-webkit-scrollbar-thumb:hover {
-  background: var(--accent);
+	background: var(--accent);
 }

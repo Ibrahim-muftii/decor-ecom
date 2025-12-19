@@ -19,11 +19,13 @@ export default function RootLayout({
   return (
     <html lang="en">
       <body className={inter.className}>
-        <Navbar />
-        <main style={{ minHeight: '80vh', paddingBottom: '80px' }}>
-          {children}
-        </main>
-        <BottomNav />
+        <div className='w-full h-full backdrop-blur-sm'>
+          <Navbar />
+          <main style={{ minHeight: '80vh', paddingBottom: '80px' }}>
+            {children}
+          </main>
+          <BottomNav />
+        </div>
       </body>
     </html>
   )
