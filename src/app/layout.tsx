@@ -10,9 +10,33 @@ import AuthSync from '@/lib/AuthSync'
 const inter = Inter({ subsets: ['latin'] })
 const outfit = Outfit({ subsets: ["latin"] });
 
+const baseUrl = process.env.NEXT_PUBLIC_BASE_URL
+  ? `https://${process.env.NEXT_PUBLIC_BASE_URL}`
+  : 'http://localhost:3000';
+
 export const metadata: Metadata = {
-  title: 'GlassFlowers | Premium Decor',
-  description: 'Elegant glassmorphic flower shop for your decor needs.',
+  metadataBase: new URL(baseUrl),
+  title: {
+    default: 'GlassFlowers | Premium Decor',
+    template: '%s | GlassFlowers'
+  },
+  description: 'Elegant glassmorphic flower shop for your decor needs. Handcrafted crystal flowers that last forever.',
+  alternates: {
+    canonical: './',
+  },
+  openGraph: {
+    title: 'GlassFlowers | Premium Decor',
+    description: 'Elegant glassmorphic flower shop for your decor needs.',
+    url: baseUrl,
+    siteName: 'GlassFlowers',
+    locale: 'en_US',
+    type: 'website',
+  },
+  twitter: {
+    card: 'summary_large_image',
+    title: 'GlassFlowers | Premium Decor',
+    description: 'Elegant glassmorphic flower shop for your decor needs.',
+  },
 }
 
 export default function RootLayout({

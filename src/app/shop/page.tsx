@@ -4,7 +4,23 @@ import ShopClient from './ShopClient';
 import styles from './page.module.css';
 import GlobalLoader from '@/components/GlobalLoader/GlobalLoader';
 
+import { Metadata } from 'next';
+
 export const dynamic = 'force-dynamic'; // Ensure no caching of search params
+
+export async function generateMetadata({ searchParams }: { searchParams: Promise<{ [key: string]: string | string[] | undefined }> }): Promise<Metadata> {
+    const resolvedSearchParams = await searchParams;
+    const category = (resolvedSearchParams.category as string) || 'All';
+
+    return {
+        title: category === 'All' ? 'Shop All Products' : `${category} Collection`,
+        description: `Browse our exclusive collection of hand-blown glass ${category === 'All' ? 'flowers' : category}.`,
+        alternates: {
+            // Canonical points to the category page, ignoring sort/filter params to consolidate SEO juice
+            canonical: category === 'All' ? '/shop' : `/shop?category=${encodeURIComponent(category)}`,
+        }
+    };
+}
 
 export default async function Shop({ searchParams }: { searchParams: Promise<{ [key: string]: string | string[] | undefined }> }) {
     const resolvedSearchParams = await searchParams;

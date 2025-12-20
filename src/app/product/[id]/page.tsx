@@ -4,6 +4,41 @@ import styles from './page.module.css';
 import ProductDetailsClient from '../ProductDetailsClient';
 import ProductCard from '@/components/ProductCard/ProductCard';
 
+import { Metadata } from 'next';
+
+// Generate Metadata
+export async function generateMetadata({ params }: { params: Promise<{ id: string }> }): Promise<Metadata> {
+    const { id } = await params;
+
+    // We need to fetch product just for metadata. 
+    // In Next.js, requests are deduped, so calling fetch/supabase here and in component should be efficient 
+    // IF we used standard fetch. Supabase client might not dedup in the same way, but it's acceptable for now.
+    const { data: product } = await supabase
+        .from('products')
+        .select('name, description, image_url, category')
+        .eq('id', id)
+        .single();
+
+    if (!product) {
+        return {
+            title: 'Product Not Found',
+        };
+    }
+
+    return {
+        title: product.name,
+        description: product.description || `Buy ${product.name} from our ${product.category} collection.`,
+        openGraph: {
+            images: [product.image_url],
+            title: product.name,
+            description: product.description || '',
+        },
+        alternates: {
+            canonical: `/product/${id}`,
+        }
+    };
+}
+
 // Using server component params
 export default async function ProductDetails({ params }: { params: Promise<{ id: string }> }) {
     const { id } = await params;
