@@ -1,0 +1,184 @@
+.container {
+	background: rgba(255, 255, 255, 0.8);
+	backdrop-filter: blur(12px);
+	border-radius: 16px;
+	box-shadow: 0 4px 6px rgba(0, 0, 0, 0.05);
+	border: 1px solid #e2e8f0;
+	padding: 2rem;
+	width: 100%; /* Force full width */
+	max-width: 100%; /* Remove 900px restriction */
+	margin: 0 auto;
+	animation: fadeIn 0.3s ease-out;
+}
+
+.header {
+	margin-bottom: 2rem;
+	padding-bottom: 1rem;
+	border-bottom: 1px solid #f1f5f9;
+}
+
+.title {
+	font-size: 1.5rem;
+	font-weight: 700;
+	color: #1e293b;
+	margin: 0;
+}
+
+.form {
+	display: flex;
+	flex-direction: column;
+	gap: 1.5rem;
+}
+
+.row {
+	display: flex;
+	gap: 1rem;
+}
+
+/* Custom Select Styling */
+.select {
+	width: 100%;
+	padding: 1rem;
+	border-radius: 12px;
+	border: 1px solid #e2e8f0;
+	background: rgba(255, 255, 255, 0.5);
+	font-size: 1rem;
+	color: #334155;
+	outline: none;
+	transition: all 0.2s;
+}
+
+.select:focus {
+	border-color: #10b981;
+	box-shadow: 0 0 0 3px rgba(16, 185, 129, 0.1);
+	background: white;
+}
+
+/* Textarea */
+.textarea {
+	width: 100%;
+	padding: 1rem;
+	border-radius: 12px;
+	border: 1px solid #e2e8f0;
+	background: rgba(255, 255, 255, 0.5);
+	font-size: 1rem;
+	min-height: 120px;
+	resize: vertical;
+	outline: none;
+	transition: all 0.2s;
+}
+
+.textarea:focus {
+	border-color: #10b981;
+	box-shadow: 0 0 0 3px rgba(16, 185, 129, 0.1);
+	background: white;
+}
+
+/* Dynamic Sections */
+.section {
+	background: #f8fafc;
+	padding: 1.5rem;
+	border-radius: 12px;
+}
+
+.sectionLabel {
+	display: block;
+	font-size: 0.85rem;
+	font-weight: 700;
+	color: #64748b;
+	margin-bottom: 0.75rem;
+}
+
+.dynamicRow {
+	display: flex;
+	align-items: center;
+	gap: 0.5rem;
+	margin-bottom: 0.75rem;
+}
+
+.removeBtn {
+	background: none;
+	border: none;
+	color: #f87171;
+	cursor: pointer;
+	font-size: 1.1rem;
+	padding: 0.5rem;
+	display: flex;
+	align-items: center;
+}
+
+.removeBtn:hover {
+	color: #ef4444;
+}
+
+.addBtn {
+	background: none;
+	border: none;
+	color: #10b981;
+	font-size: 0.9rem;
+	font-weight: 700;
+	cursor: pointer;
+	display: flex;
+	align-items: center;
+	gap: 0.25rem;
+}
+
+.addBtn:hover {
+	text-decoration: underline;
+}
+
+/* Image Upload */
+.uploadArea {
+	border: 2px dashed #cbd5e1;
+	border-radius: 12px;
+	padding: 2rem;
+	text-align: center;
+	cursor: pointer;
+	transition: all 0.2s;
+	height: 200px;
+	display: flex;
+	flex-direction: column;
+	align-items: center;
+	justify-content: center;
+	position: relative;
+	overflow: hidden;
+	background: white;
+}
+
+.uploadArea:hover {
+	border-color: #10b981;
+	background: #f0fdf4;
+}
+
+.uploadPlaceholder {
+	color: #94a3b8;
+	display: flex;
+	flex-direction: column;
+	align-items: center;
+	gap: 0.5rem;
+}
+
+.uploadingOverlay {
+	position: absolute;
+	inset: 0;
+	background: rgba(0, 0, 0, 0.5);
+	color: white;
+	display: flex;
+	align-items: center;
+	justify-content: center;
+	font-weight: 600;
+}
+
+/* Helper to override GlassInput if necessary, but GlassInput has its own styles. 
+   We assume GlassInput accepts className or we wrap it. */
+
+@keyframes fadeIn {
+	from {
+		opacity: 0;
+		transform: translateY(10px);
+	}
+	to {
+		opacity: 1;
+		transform: translateY(0);
+	}
+}

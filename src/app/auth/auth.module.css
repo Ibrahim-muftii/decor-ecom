@@ -1,57 +1,87 @@
+/* Glassy Centered Auth Theme */
 .container {
-    min-height: 80vh;
-    display: flex;
-    align-items: center;
-    justify-content: center;
-    padding: 1rem;
+	min-height: 85vh; /* Center vertically in the viewport */
+	display: flex;
+	align-items: center;
+	justify-content: center;
+	padding: 1rem;
+	position: relative;
+	background: transparent; /* Background handled by layout or global */
 }
 
+/* Centered Glass Card */
 .card {
-    width: 100%;
-    max-width: 400px;
-    background: var(--glass-bg);
-    border: 1px solid var(--glass-border);
-    padding: 2.5rem;
-    border-radius: 24px;
-    backdrop-filter: blur(16px);
-    display: flex;
-    flex-direction: column;
-    gap: 2rem;
+	width: 100%;
+	max-width: 420px; /* XS / Small width */
+	background: rgba(255, 255, 255, 0.65); /* High opacity for premium feel */
+	border: 1px solid rgba(255, 255, 255, 0.4);
+	border-radius: 24px;
+	padding: 3rem 2rem;
+	box-shadow: 0 4px 6px -1px rgba(0, 0, 0, 0.05), 0 2px 4px -1px rgba(0, 0, 0, 0.03), 0 20px 25px -5px rgba(0, 0, 0, 0.05); /* Premium shadow */
+	backdrop-filter: blur(24px); /* Heavy blur */
+	-webkit-backdrop-filter: blur(24px);
+
+	display: flex;
+	flex-direction: column;
+	gap: 2rem;
+
+	position: relative;
+	z-index: 10;
 }
 
+/* Typography */
 .header {
-    text-align: center;
+	text-align: center;
 }
 
 .title {
-    font-size: 2rem;
-    font-weight: 700;
-    margin-bottom: 0.5rem;
+	font-size: 2rem;
+	font-weight: 700;
+	margin-bottom: 0.5rem;
+	color: #1e293b;
+	font-family: var(--font-outfit), sans-serif;
 }
 
 .subtitle {
-    color: var(--text-secondary);
-    font-size: 0.9rem;
+	color: #64748b;
+	font-size: 0.95rem;
+	line-height: 1.5;
 }
 
 .form {
-    display: flex;
-    flex-direction: column;
-    gap: 1.5rem;
+	display: flex;
+	flex-direction: column;
+	gap: 1.25rem;
 }
 
+/* Footer Links */
 .footer {
-    text-align: center;
-    font-size: 0.9rem;
-    color: var(--text-secondary);
+	text-align: center;
+	font-size: 0.9rem;
+	color: #64748b;
+	margin-top: 1rem;
 }
 
 .link {
-    color: var(--accent);
-    margin-left: 4px;
-    font-weight: 600;
+	color: var(--accent);
+	margin-left: 6px;
+	font-weight: 600;
+	text-decoration: none;
+	transition: color 0.2s;
 }
 
 .link:hover {
-    text-decoration: underline;
+	color: #15803d;
+	text-decoration: underline;
+}
+
+/* Error Message */
+.error {
+	background: #fef2f2;
+	color: #ef4444;
+	padding: 0.75rem;
+	border-radius: 12px;
+	font-size: 0.9rem;
+	text-align: center;
+	border: 1px solid #fee2e2;
 }

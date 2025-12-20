@@ -234,3 +234,115 @@
 	color: var(--text-muted);
 	font-style: italic;
 }
+
+/* Order List Styles */
+.ordersList {
+	display: flex;
+	flex-direction: column;
+	gap: 1.5rem;
+}
+
+.orderItem {
+	background: rgba(255, 255, 255, 0.5);
+	border-radius: 20px;
+	padding: 1.5rem;
+	border: 1px solid rgba(255, 255, 255, 0.8);
+	transition: all 0.3s ease;
+}
+
+.orderItem:hover {
+	background: rgba(255, 255, 255, 0.9);
+	transform: translateY(-2px);
+	box-shadow: 0 8px 20px -5px rgba(6, 78, 59, 0.1);
+}
+
+.orderHeader {
+	display: flex;
+	justify-content: space-between;
+	align-items: center;
+	margin-bottom: 1rem;
+	padding-bottom: 0.75rem;
+	border-bottom: 1px solid rgba(0, 0, 0, 0.05);
+}
+
+.orderId {
+	font-weight: 700;
+	color: var(--text-primary);
+	font-family: monospace;
+	font-size: 1.1rem;
+}
+
+.status {
+	padding: 6px 12px;
+	border-radius: 20px;
+	font-size: 0.8rem;
+	font-weight: 700;
+	text-transform: uppercase;
+	letter-spacing: 0.5px;
+}
+
+.pending {
+	background: rgba(251, 191, 36, 0.2);
+	color: #d97706;
+	border: 1px solid rgba(251, 191, 36, 0.3);
+}
+
+.shipped {
+	background: rgba(59, 130, 246, 0.2);
+	color: #2563eb;
+	border: 1px solid rgba(59, 130, 246, 0.3);
+}
+
+.delivered {
+	background: rgba(16, 185, 129, 0.2);
+	color: #059669;
+	border: 1px solid rgba(16, 185, 129, 0.3);
+}
+
+.orderDetails {
+	display: flex;
+	justify-content: space-between;
+	align-items: center;
+	color: var(--text-secondary);
+	font-size: 0.95rem;
+	margin-bottom: 1rem;
+}
+
+.orderDate {
+	font-size: 0.85rem;
+	opacity: 0.8;
+}
+
+.orderActions {
+	display: flex;
+	justify-content: flex-end;
+}
+
+.actionBtn {
+	display: flex;
+	align-items: center;
+	gap: 8px;
+	padding: 8px 16px;
+	border-radius: 12px;
+	border: none;
+	background: var(--text-primary); /* Deep green */
+	color: #fff;
+	font-weight: 600;
+	font-size: 0.9rem;
+	cursor: pointer;
+	transition: all 0.2s;
+}
+
+.actionBtn:hover {
+	background: var(--accent); /* Emerald */
+	transform: translateY(-1px);
+}
+
+.deliveredIcon {
+	display: flex;
+	align-items: center;
+	gap: 6px;
+	color: var(--accent);
+	font-weight: 700;
+	font-size: 0.9rem;
+}

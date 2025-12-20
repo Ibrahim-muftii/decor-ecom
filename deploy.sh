@@ -10,7 +10,7 @@
 SERVER_USER="ubuntu"              # e.g., root, ubuntu
 SERVER_IP="129.153.192.144"                # e.g., 192.168.1.1
 SSH_KEY_PATH="/e/TechScribeX/oracle_key" # Path to your private key
-APP_DIR="/var/www/decor-ecom"      # Full path to your app on the server
+APP_DIR="/home/ubuntu/decor-ecom"      # Full path to your app on the server
 APP_NAME="decor-app"              # PM2 app name
 BRANCH="master"                      # Git branch to deploy
 
@@ -46,11 +46,20 @@ fi
 echo "⚡ Connecting to server $SERVER_IP..."
 
 ssh -i $SSH_KEY_PATH $SERVER_USER@$SERVER_IP << EOF
+    # Load NVM and Profile
+    export NVM_DIR="\$HOME/.nvm"
+    [ -s "\$NVM_DIR/nvm.sh" ] && \\. "\$NVM_DIR/nvm.sh"
+    source ~/.profile
+    source ~/.bashrc
+
     echo "📂 Navigating to app directory: $APP_DIR"
     cd $APP_DIR
 
     echo "⬇️  Pulling latest code..."
     git pull origin $BRANCH
+
+    echo "🗑️  Removing old build..."
+    rm -rf .next
 
     echo "📦 Installing dependencies..."
     npm install

@@ -1,0 +1,235 @@
+.container {
+	display: flex;
+	flex-direction: column;
+	gap: 2rem;
+	animation: fadeIn 0.5s ease-out;
+}
+
+/* Metrics Grid */
+.metricsGrid {
+	display: grid;
+	grid-template-columns: repeat(1, 1fr);
+	gap: 1.5rem;
+}
+
+@media (min-width: 640px) {
+	.metricsGrid {
+		grid-template-columns: repeat(2, 1fr);
+	}
+}
+
+@media (min-width: 1024px) {
+	.metricsGrid {
+		grid-template-columns: repeat(5, 1fr);
+	}
+}
+
+.statCard {
+	background: rgba(255, 255, 255, 0.7);
+	backdrop-filter: blur(8px);
+	padding: 1.5rem;
+	border-radius: 16px;
+	border: 1px solid rgba(255, 255, 255, 0.5);
+	box-shadow: 0 4px 6px rgba(0, 0, 0, 0.05);
+	display: flex;
+	align-items: center;
+	gap: 1rem;
+}
+
+.iconWrapper {
+	width: 48px;
+	height: 48px;
+	border-radius: 12px;
+	display: flex;
+	align-items: center;
+	justify-content: center;
+	color: white;
+	box-shadow: 0 4px 10px rgba(0, 0, 0, 0.1);
+}
+
+/* Icon Backgrounds - All Unified to Botanical Theme */
+.bgEmerald,
+.bgBlue,
+.bgViolet,
+.bgAmber,
+.bgRose {
+	background: linear-gradient(135deg, #10b981 0%, #059669 100%);
+	box-shadow: 0 4px 15px rgba(16, 185, 129, 0.3);
+}
+
+/* Optional: Slight opacity variations if distinguishing is needed, 
+   but user requested single theme color. 
+   We will make them all looks like the primary brand green. 
+*/
+
+.statContent p {
+	margin: 0;
+	font-size: 0.85rem;
+	color: #64748b;
+	font-weight: 500;
+}
+
+.statContent h3 {
+	margin: 0;
+	font-size: 1.5rem;
+	font-weight: 700;
+	color: #1e293b;
+}
+
+/* Tables Layout */
+.tablesSection {
+	display: flex;
+	flex-direction: column;
+	gap: 1.5rem;
+}
+
+@media (min-width: 1024px) {
+	.tablesSection {
+		flex-direction: row;
+	}
+}
+
+.card {
+	background: rgba(255, 255, 255, 0.7);
+	backdrop-filter: blur(8px);
+	border-radius: 16px;
+	border: 1px solid rgba(255, 255, 255, 0.5);
+	box-shadow: 0 4px 6px rgba(0, 0, 0, 0.05);
+	padding: 1.5rem;
+}
+
+.cardLarge {
+	flex: 1; /* 60% approx space */
+}
+
+.cardSmall {
+	width: 100%;
+}
+
+@media (min-width: 1024px) {
+	.cardSmall {
+		width: 40%;
+	}
+}
+
+.cardHeader {
+	display: flex;
+	justify-content: space-between;
+	align-items: center;
+	margin-bottom: 1.5rem;
+}
+
+.cardTitle {
+	font-size: 1.1rem;
+	font-weight: 700;
+	color: #1e293b;
+	margin: 0;
+}
+
+.viewAll {
+	font-size: 0.9rem;
+	color: #10b981;
+	font-weight: 500;
+	background: none;
+	border: none;
+	cursor: pointer;
+}
+
+.viewAll:hover {
+	text-decoration: underline;
+}
+
+/* Table Basic Styling */
+.tableWrapper {
+	overflow-x: auto;
+}
+
+.table {
+	width: 100%;
+	border-collapse: collapse;
+}
+
+.table th {
+	text-align: left;
+	padding-bottom: 0.75rem;
+	color: #64748b;
+	font-weight: 500;
+	font-size: 0.9rem;
+	border-bottom: 1px solid #e2e8f0;
+}
+
+.table td {
+	padding: 0.75rem 0;
+	border-bottom: 1px solid #f1f5f9;
+	color: #334155;
+	font-size: 0.95rem;
+}
+
+.table tr:last-child td {
+	border-bottom: none;
+}
+
+.stockRed {
+	color: #f43f5e;
+	font-weight: 700;
+}
+
+/* Recent Order Item */
+.orderItem {
+	display: flex;
+	justify-content: space-between;
+	align-items: center;
+	padding: 0.75rem;
+	background: rgba(255, 255, 255, 0.6);
+	border: 1px solid #f1f5f9;
+	border-radius: 12px;
+	margin-bottom: 0.75rem;
+}
+
+.orderId {
+	font-weight: 700;
+	color: #334155;
+	margin: 0;
+}
+
+.orderDate {
+	font-size: 0.75rem;
+	color: #94a3b8;
+	margin: 0;
+}
+
+.price {
+	font-weight: 700;
+	color: #10b981;
+	margin: 0 0 0.25rem 0;
+}
+
+.badge {
+	display: inline-block;
+	padding: 0.15rem 0.5rem;
+	border-radius: 999px;
+	font-size: 0.75rem;
+	font-weight: 600;
+}
+
+.pending {
+	background: #fef3c7;
+	color: #b45309;
+}
+.shipped {
+	background: #dbeafe;
+	color: #1d4ed8;
+}
+.delivered {
+	background: #d1fae5;
+	color: #047857;
+}
+
+@keyframes fadeIn {
+	from {
+		opacity: 0;
+	}
+	to {
+		opacity: 1;
+	}
+}

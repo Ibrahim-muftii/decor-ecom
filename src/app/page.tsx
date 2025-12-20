@@ -5,20 +5,8 @@ import Link from 'next/link';
 import { FaLeaf, FaStar, FaGift, FaHeart, FaArrowRight } from 'react-icons/fa';
 import GlassButton from '@/components/GlassButton/GlassButton';
 import ProductCard from '@/components/ProductCard/ProductCard';
+import { supabase } from '@/lib/supabaseClient';
 import styles from './page.module.css';
-
-// Enhanced Mock Data
-const FEATURED_PRODUCTS = [
-  { id: '1', name: 'Golden Orchid', price: 45.99, discountPrice: 39.99, category: 'Orchids', image_url: 'https://images.unsplash.com/photo-1563241527-3004b7be0fee?auto=format&fit=crop&q=80&w=500', rating: 4.8 },
-  { id: '2', name: 'Velvet Rose', price: 29.50, category: 'Roses', image_url: 'https://images.unsplash.com/photo-1548602088-9d12a4f9c10d?auto=format&fit=crop&q=80&w=500', rating: 4.5 },
-  { id: '3', name: 'Crystal Lily', price: 55.00, discountPrice: 45.00, category: 'Lilies', image_url: 'https://images.unsplash.com/photo-1526047932273-341f2a7631f9?auto=format&fit=crop&q=80&w=500', rating: 4.9 },
-];
-
-const NEW_ARRIVALS = [
-  { id: '4', name: 'Midnight Tulip', price: 35.00, category: 'Tulips', image_url: 'https://images.unsplash.com/photo-1520763185298-1b434c919102?auto=format&fit=crop&q=80&w=500', rating: 4.7 },
-  { id: '5', name: 'Frosted Peony', price: 42.00, discountPrice: 38.00, category: 'Peonies', image_url: 'https://images.unsplash.com/photo-1490750967868-88aa4486c946?auto=format&fit=crop&q=80&w=500', rating: 4.6 },
-  { id: '6', name: 'Sunlit Daisy', price: 28.00, category: 'Daisies', image_url: 'https://images.unsplash.com/photo-1606041008023-472dfb5e530f?auto=format&fit=crop&q=80&w=500', rating: 4.4 },
-];
 
 const CATEGORIES = [
   { name: 'Roses', icon: FaHeart, count: 24, color: '#ef4444' },
@@ -29,10 +17,34 @@ const CATEGORIES = [
 
 export default function Home() {
   const [loaded, setLoaded] = useState(false);
+  const [featuredProducts, setFeaturedProducts] = useState<any[]>([]);
+  const [newArrivals, setNewArrivals] = useState<any[]>([]);
 
   useEffect(() => {
     setLoaded(true);
+    fetchProducts();
   }, []);
+
+  const fetchProducts = async () => {
+    const { data, error } = await supabase
+      .from('products')
+      .select('*')
+      .order('created_at', { ascending: false });
+
+    if (error) {
+      console.error('Error fetching products:', error);
+      return;
+    }
+
+    if (data) {
+      // Filter for 'Featured' section
+      const featured = data.filter((p: any) => p.is_featured);
+      setFeaturedProducts(featured.slice(0, 3)); // Limit to 3 for layout
+
+      // Valid 'New Arrivals' (excluding featured to avoid dupes on home, or just take latest 3)
+      setNewArrivals(data.slice(0, 3));
+    }
+  };
 
   return (
     <div className={`${styles.container} ${loaded ? styles.loaded : ''}`}>
@@ -92,7 +104,7 @@ export default function Home() {
             const Icon = cat.icon;
             return (
               <Link key={cat.name} href={`/shop?category=${cat.name}`} className={styles.categoryCard} style={{ animationDelay: `${i * 100}ms` }}>
-                <div className={styles.categoryIcon} style={{ color: cat.color, background: `${cat.color}15` }}>
+                <div className={styles.categoryIcon}>
                   <Icon />
                 </div>
                 <div>
@@ -114,14 +126,14 @@ export default function Home() {
           </div>
         </div>
         <div className={styles.productGrid}>
-          {FEATURED_PRODUCTS.map((product) => (
+          {featuredProducts.map((product) => (
             <ProductCard
               key={product.id}
               id={product.id}
               name={product.name}
               category={product.category}
               price={product.price}
-              discountPrice={product.discountPrice}
+              discountPrice={product.discount_price} // Note: db column is discount_price
               image_url={product.image_url}
               rating={product.rating}
             />
@@ -148,14 +160,14 @@ export default function Home() {
           </div>
         </div>
         <div className={styles.productGrid}>
-          {NEW_ARRIVALS.map((product) => (
+          {newArrivals.map((product) => (
             <ProductCard
               key={product.id}
               id={product.id}
               name={product.name}
               category={product.category}
               price={product.price}
-              discountPrice={product.discountPrice}
+              discountPrice={product.discount_price}
               image_url={product.image_url}
               rating={product.rating}
             />
