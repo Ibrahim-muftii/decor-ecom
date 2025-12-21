@@ -5,6 +5,7 @@ import Link from 'next/link';
 import { FaLeaf, FaStar, FaGift, FaHeart, FaArrowRight } from 'react-icons/fa';
 import GlassButton from '@/components/GlassButton/GlassButton';
 import ProductCard from '@/components/ProductCard/ProductCard';
+import SearchBar from '@/components/SearchBar/SearchBar';
 import { supabase } from '@/lib/supabaseClient';
 import styles from './page.module.css';
 
@@ -66,6 +67,11 @@ export default function Home() {
           <p className={styles.heroSubtitle}>
             Timeless glass flowers that never fade. Meticulously handcrafted to capture the delicate beauty of nature in eternal crystal form.
           </p>
+
+          <div style={{ margin: '2rem 0', width: '100%', display: 'flex', justifyContent: 'center' }}>
+            <SearchBar />
+          </div>
+
           <div className={styles.ctaGroup}>
             <Link href="/shop">
               <button className={styles.primaryBtn}>

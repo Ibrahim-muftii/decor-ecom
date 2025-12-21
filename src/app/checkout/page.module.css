@@ -1,75 +1,178 @@
 .container {
-    padding: 2rem;
-    max-width: 1000px;
-    margin: 0 auto;
+	max-width: 1200px;
+	margin: 0 auto;
+	padding: 8rem 2rem 6rem;
+}
+
+.header {
+	margin-bottom: 3rem;
+	text-align: center;
 }
 
 .title {
-    font-size: 2rem;
-    margin-bottom: 2rem;
-    text-align: center;
+	font-size: 2.5rem;
+	color: var(--botanical-green);
+	margin-bottom: 0.5rem;
 }
 
-.grid {
-    display: grid;
-    grid-template-columns: 3fr 2fr;
-    gap: 3rem;
+.subtitle {
+	color: #64748b;
 }
 
-@media (max-width: 768px) {
-    .grid {
-        grid-template-columns: 1fr;
-    }
+.layout {
+	display: grid;
+	grid-template-columns: 1.5fr 1fr;
+	gap: 3rem;
+}
+
+.formSection {
+	background: rgba(255, 255, 255, 0.7);
+	backdrop-filter: blur(12px);
+	padding: 2rem;
+	border-radius: 20px;
+	border: 1px solid rgba(255, 255, 255, 0.5);
+	box-shadow: 0 4px 6px rgba(0, 0, 0, 0.02);
 }
 
 .sectionTitle {
-    font-size: 1.2rem;
-    margin-bottom: 1.5rem;
-    color: var(--text-secondary);
+	font-size: 1.5rem;
+	color: var(--botanical-green);
+	margin-bottom: 1.5rem;
+	padding-bottom: 0.5rem;
+	border-bottom: 1px solid rgba(16, 185, 129, 0.2);
 }
 
-.form {
-    display: flex;
-    flex-direction: column;
-    gap: 1.5rem;
+.formGrid {
+	display: grid;
+	grid-template-columns: 1fr 1fr;
+	gap: 1.5rem;
+	margin-bottom: 2rem;
 }
 
-.row {
-    display: flex;
-    gap: 1.5rem;
+.fullWidth {
+	grid-column: span 2;
 }
 
-.summaryCard {
-    background: var(--glass-bg);
-    border: 1px solid var(--glass-border);
-    padding: 2rem;
-    border-radius: 20px;
-    backdrop-filter: blur(12px);
+.formGroup {
+	display: flex;
+	flex-direction: column;
+	gap: 0.5rem;
 }
 
-.lineItems {
-    margin-bottom: 2rem;
-    display: flex;
-    flex-direction: column;
-    gap: 1rem;
+.label {
+	font-size: 0.9rem;
+	font-weight: 600;
+	color: #334155;
 }
 
-.item {
-    display: flex;
-    justify-content: space-between;
-    color: var(--text-secondary);
+.input,
+.textarea {
+	padding: 12px;
+	border-radius: 10px;
+	border: 1px solid #e2e8f0;
+	background: rgba(255, 255, 255, 0.8);
+	font-family: inherit;
+	transition: all 0.3s;
 }
 
-.totalRow {
-    display: flex;
-    justify-content: space-between;
-    margin-bottom: 2rem;
-    padding-top: 1rem;
-    border-top: 1px solid rgba(255, 255, 255, 0.1);
-    font-weight: 700;
-    font-size: 1.2rem;
+.input:focus,
+.textarea:focus {
+	outline: none;
+	border-color: var(--botanical-green);
+	box-shadow: 0 0 0 3px rgba(16, 185, 129, 0.1);
 }
 
-.totalAmount {
-    color: var(--accent);
+.textarea {
+	min-height: 100px;
+	resize: vertical;
+}
+
+.summarySection {
+	height: fit-content;
+}
+
+.orderCard {
+	background: white;
+	padding: 2rem;
+	border-radius: 20px;
+	border: 1px solid rgba(16, 185, 129, 0.2);
+	box-shadow: 0 10px 30px rgba(0, 0, 0, 0.05);
+	position: sticky;
+	top: 100px;
+}
+
+.placeOrderBtn {
+	width: 100%;
+	padding: 16px;
+	margin-top: 1.5rem;
+	background: linear-gradient(135deg, #10b981 0%, #059669 100%);
+	color: white;
+	border: none;
+	border-radius: 12px;
+	font-size: 1.1rem;
+	font-weight: 700;
+	cursor: pointer;
+	transition: all 0.3s;
+	box-shadow: 0 4px 15px rgba(16, 185, 129, 0.3);
+}
+
+.placeOrderBtn:hover {
+	transform: translateY(-2px);
+	box-shadow: 0 8px 25px rgba(16, 185, 129, 0.4);
+}
+
+/* Media Queries */
+
+@media (max-width: 900px) {
+	.layout {
+		grid-template-columns: 1fr;
+	}
+
+	.layout > div:nth-child(2) {
+		order: 1; /* Show summary last on mobile */
+	}
+}
+
+@media (max-width: 600px) {
+	.container {
+		padding: 6rem 1rem 8rem; /* More space bottom for nav, less side padding */
+	}
+
+	.formGrid {
+		grid-template-columns: 1fr !important; /* Force single column */
+		gap: 1rem;
+	}
+
+	.fullWidth {
+		grid-column: span 1; /* Reset span */
+	}
+
+	.input,
+	.textarea {
+		font-size: 16px; /* Prevent IOS zoom */
+		padding: 14px; /* Larger touch target */
+	}
+}
+
+@media (max-width: 380px) {
+	.container {
+		padding: 6rem 0.5rem 8rem; /* Minimal padding */
+	}
+
+	.formSection,
+	.orderCard {
+		padding: 1rem; /* Compact padding */
+	}
+
+	.title {
+		font-size: 1.8rem; /* Smaller title */
+	}
+
+	.sectionTitle {
+		font-size: 1.25rem;
+	}
+
+	.input {
+		padding: 10px; /* reclaim space */
+	}
 }

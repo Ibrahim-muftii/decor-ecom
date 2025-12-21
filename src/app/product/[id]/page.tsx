@@ -34,7 +34,7 @@ export async function generateMetadata({ params }: { params: Promise<{ id: strin
             description: product.description || '',
         },
         alternates: {
-            canonical: `/product/${id}`,
+            canonical: `${process.env.NEXT_PUBLIC_BASE_URL || 'http://localhost:3000'}/product/${id}`,
         }
     };
 }

@@ -39,9 +39,9 @@ export default function Login() {
                 if (profile?.role === 'admin') {
                     router.push('/admin');
                 } else {
-                    router.push('/shop');
+                    // Use window.location to properly reset state/BottomNav on clean load
+                    window.location.href = '/shop';
                 }
-                router.refresh();
             }
 
         } catch (err: any) {

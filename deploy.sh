@@ -58,13 +58,10 @@ ssh -i $SSH_KEY_PATH $SERVER_USER@$SERVER_IP << EOF
     echo "⬇️  Pulling latest code..."
     git pull origin $BRANCH
 
-    echo "🗑️  Removing old build..."
-    rm -rf .next
-
     echo "📦 Installing dependencies..."
     npm install
 
-    echo "🔨 Building the application..."
+    echo "🔨Removign old build and Building the application..."
     npm run build
 
     echo "🔄 Restarting application..."

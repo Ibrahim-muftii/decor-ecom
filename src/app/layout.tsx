@@ -6,6 +6,8 @@ import BottomNav from '@/components/BottomNav/BottomNav'
 import Footer from '@/components/Footer/Footer';
 import StoreProvider from '@/lib/StoreProvider'
 import AuthSync from '@/lib/AuthSync'
+import { ToastContainer } from 'react-toastify';
+import 'react-toastify/dist/ReactToastify.css';
 
 const inter = Inter({ subsets: ['latin'] })
 const outfit = Outfit({ subsets: ["latin"] });
@@ -57,6 +59,7 @@ export default function RootLayout({
             <Footer />
             <BottomNav />
           </div>
+          <ToastContainer position="bottom-right" theme="light" />
         </StoreProvider>
       </body>
     </html>

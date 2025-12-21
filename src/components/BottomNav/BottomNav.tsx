@@ -3,62 +3,107 @@
 import React, { useState, useEffect } from 'react';
 import Link from 'next/link';
 import { usePathname } from 'next/navigation';
-import { FiHome, FiGrid, FiFileText, FiDroplet, FiShoppingCart } from 'react-icons/fi';
+import { FiHome, FiGrid, FiShoppingCart, FiUser, FiLogOut, FiLogIn } from 'react-icons/fi';
+import { supabase } from '@/lib/supabaseClient';
 import styles from './BottomNav.module.css';
 
-const navItems = [
-    { href: '/', icon: FiHome, label: 'Home' },
-    { href: '/shop', icon: FiGrid, label: 'Shop' },
-    { href: '/orders', icon: FiFileText, label: 'Orders' },
-    { href: '/featured', icon: FiDroplet, label: 'Drops' },
-    { href: '/cart', icon: FiShoppingCart, label: 'Cart' },
-];
+
 
 const BottomNav = () => {
     const pathname = usePathname();
     const [activeIndex, setActiveIndex] = useState(0);
+    const [user, setUser] = useState<any>(null);
+
+    useEffect(() => {
+        // Check initial user
+        const checkUser = async () => {
+            const { data: { session } } = await supabase.auth.getSession();
+            setUser(session?.user ?? null);
+        };
+        checkUser();
+
+        // Listen for changes
+        const { data: { subscription } } = supabase.auth.onAuthStateChange((_event, session) => {
+            setUser(session?.user ?? null);
+        });
+
+        return () => subscription.unsubscribe();
+    }, []);
+
+    const getNavItems = () => {
+        const baseItems = [
+            { href: '/', icon: FiHome, label: 'Home' },
+            { href: '/shop', icon: FiGrid, label: 'Shop' },
+            { href: '/cart', icon: FiShoppingCart, label: 'Cart' },
+        ];
+
+        if (user) {
+            return [
+                ...baseItems,
+                { href: '/profile', icon: FiUser, label: 'Profile' },
+                { href: '/auth/login', icon: FiLogOut, label: 'Logout' }, // Logout logic usually needs onClick preventDefault, but link to login page works as toggle often if handled there. Ideally we should handle logout action.
+            ];
+        } else {
+            return [
+                ...baseItems,
+                { href: '/auth/login', icon: FiLogIn, label: 'Sign In' },
+            ];
+        }
+    };
+
+    const currentNavItems = getNavItems();
 
     useEffect(() => {
         let matchedIndex = 0;
-        for (let i = 0; i < navItems.length; i++) {
-            if (pathname === navItems[i].href || (navItems[i].href !== '/' && pathname?.startsWith(navItems[i].href))) {
+        for (let i = 0; i < currentNavItems.length; i++) {
+            if (pathname === currentNavItems[i].href || (currentNavItems[i].href !== '/' && pathname?.startsWith(currentNavItems[i].href))) {
                 matchedIndex = i;
             }
         }
         setActiveIndex(matchedIndex);
-    }, [pathname]);
+    }, [pathname, currentNavItems.length]); // Re-run if items change
+
+    const handleLogout = async (e: React.MouseEvent) => {
+        e.preventDefault();
+        await supabase.auth.signOut();
+        window.location.href = '/auth/login'; // Redirect to login after logout
+    };
 
     return (
         <div className={styles.navContainer}>
             <nav className={styles.navbar}>
-                {/* The Moving Notch/Curve Container */}
-                {/* Since items are evenly distributed 20% each (1/5), we just translate 100% of that 20% width width relative to the container */}
                 <div
                     className={styles.activeIndicatorContainer}
                     style={{
-                        width: '20%', // Explicitly 1/5th
+                        width: `${100 / currentNavItems.length}%`, // Dynamic width based on item count
                         transform: `translateX(${activeIndex * 100}%)`
                     }}
                 >
                     <div className={styles.notchCurveLeft}></div>
                     <div className={styles.notchCurveRight}></div>
                     <div className={styles.activeCircle}>
-                        {navItems[activeIndex].icon({ className: styles.activeIcon })}
+                        {currentNavItems[activeIndex]?.icon({ className: styles.activeIcon })}
                     </div>
                 </div>
 
-                {/* Nav Items */}
                 <div className={styles.itemsContainer}>
-                    {navItems.map((item, index) => {
+                    {currentNavItems.map((item, index) => {
                         const Icon = item.icon;
                         const isActive = activeIndex === index;
+                        const isLogout = item.label === 'Logout';
 
                         return (
                             <Link
                                 key={item.href}
                                 href={item.href}
                                 className={`${styles.navItem} ${isActive ? styles.active : ''}`}
-                                onClick={() => setActiveIndex(index)}
+                                onClick={(e) => {
+                                    if (isLogout) {
+                                        handleLogout(e);
+                                    } else {
+                                        setActiveIndex(index);
+                                    }
+                                }}
                             >
                                 <span className={styles.iconWrapper}>
                                     <Icon className={styles.icon} />

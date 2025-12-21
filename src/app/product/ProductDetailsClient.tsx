@@ -6,6 +6,7 @@ import { FaMinus, FaPlus, FaShoppingCart, FaStar, FaHeart } from 'react-icons/fa
 import GlassButton from '../../components/GlassButton/GlassButton';
 import styles from './[id]/page.module.css';
 import { toast } from 'react-toastify';
+import { addToCart } from '@/lib/cartUtils';
 
 interface ProductDetailsClientProps {
     product: any;
@@ -24,9 +25,8 @@ export default function ProductDetailsClient({ product, relatedProducts }: Produ
     const increment = () => setQuantity(q => q + 1);
     const decrement = () => setQuantity(q => Math.max(1, q - 1));
 
-    const handleAddToCart = () => {
-        toast.success(`Added ${quantity} ${product.name} to cart!`);
-        // Actual Cart Logic would interact with Redux here
+    const handleAddToCart = async () => {
+        await addToCart(product.id, quantity);
     };
 
     return (

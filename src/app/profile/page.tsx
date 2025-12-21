@@ -1,7 +1,8 @@
 'use client';
 
 import React, { useEffect, useState } from 'react';
-import { FaBox, FaUserCircle } from 'react-icons/fa';
+import Link from 'next/link';
+import { FaBox, FaUserCircle, FaCrown } from 'react-icons/fa';
 import GlassButton from '@/components/GlassButton/GlassButton';
 import { supabase } from '@/lib/supabaseClient';
 import styles from './page.module.css';
@@ -10,25 +11,44 @@ export default function Profile() {
     const [user, setUser] = useState<any>(null);
     const [orders, setOrders] = useState<any[]>([]);
     const [loading, setLoading] = useState(true);
+    const [userRole, setUserRole] = useState<string | null>(null);
 
     useEffect(() => {
         fetchProfileData();
     }, []);
 
     const fetchProfileData = async () => {
-        const { data: { user } } = await supabase.auth.getUser();
-        setUser(user);
+        try {
+            const { data: { session } } = await supabase.auth.getSession();
+            const user = session?.user;
 
-        if (user) {
-            const { data: orderData } = await supabase
-                .from('orders')
-                .select('*')
-                .eq('user_id', user.id)
-                .order('created_at', { ascending: false });
+            setUser(user);
 
-            if (orderData) setOrders(orderData);
+            if (user) {
+                // Fetch user role
+                const { data: profileData } = await supabase
+                    .from('profiles')
+                    .select('role')
+                    .eq('id', user.id)
+                    .single();
+
+                setUserRole(profileData?.role || null);
+
+                // Fetch orders
+                const { data: orderData, error } = await supabase
+                    .from('orders')
+                    .select('*')
+                    .eq('user_id', user.id)
+                    .order('created_at', { ascending: false });
+
+                if (error) throw error;
+                if (orderData) setOrders(orderData);
+            }
+        } catch (error) {
+            console.error('Error loading profile:', error);
+        } finally {
+            setLoading(false);
         }
-        setLoading(false);
     };
 
     if (loading) return <div className={styles.container}>Loading...</div>;
@@ -46,7 +66,14 @@ export default function Profile() {
                         <p className={styles.email}>{user?.email}</p>
                     </div>
                 </div>
-                {/* <GlassButton variant="secondary">Edit Profile</GlassButton> */}
+                {userRole === 'admin' && (
+                    <Link href="/admin">
+                        <GlassButton variant="primary" className={styles.adminBtn}>
+                            <FaCrown style={{ marginRight: '8px' }} />
+                            Visit Admin Panel
+                        </GlassButton>
+                    </Link>
+                )}
             </div>
 
             <div className={styles.content}>

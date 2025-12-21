@@ -1,10 +1,10 @@
 {
-  "name": "learning-management-system",
+  "name": "decor-ecom",
   "version": "0.1.0",
   "private": true,
   "scripts": {
     "dev": "next dev",
-    "build": "next build",
+    "build": "rm -rf .next && next build",
     "start": "next start"
   },
   "dependencies": {
