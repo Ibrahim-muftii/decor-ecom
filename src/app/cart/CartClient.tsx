@@ -73,34 +73,45 @@ export default function CartClient() {
     const updateQuantity = async (itemId: string, newQty: number) => {
         if (newQty < 1) return;
 
-        // Optimistic update
-        setCartItems(items => items.map(item =>
-            item.id === itemId ? { ...item, quantity: newQty } : item
-        ));
+        try {
+            // Optimistic update
+            setCartItems(items => items.map(item =>
+                item.id === itemId ? { ...item, quantity: newQty } : item
+            ));
 
-        const { error } = await supabase
-            .from('cart_items')
-            .update({ quantity: newQty })
-            .eq('id', itemId);
+            const { error } = await supabase
+                .from('cart_items')
+                .update({ quantity: newQty })
+                .eq('id', itemId);
 
-        if (error) {
-            console.error('Error updating quantity:', error);
-            fetchCart(); // Revert on error
+            if (error) {
+                console.error('Error updating quantity:', error);
+                await fetchCart(); // Revert on error
+            }
+        } catch (err) {
+            console.error('Failed to update quantity:', err);
+            await fetchCart();
         }
     };
 
     const removeItem = async (itemId: string) => {
-        // Optimistic update
-        setCartItems(items => items.filter(item => item.id !== itemId));
+        try {
+            // Optimistic update
+            setCartItems(items => items.filter(item => item.id !== itemId));
 
-        const { error } = await supabase
-            .from('cart_items')
-            .delete()
-            .eq('id', itemId);
+            const { error } = await supabase
+                .from('cart_items')
+                .delete()
+                .eq('id', itemId);
 
-        if (error) {
-            console.error('Error deleting item:', error);
-            fetchCart();
+            if (error) {
+                console.error('Error deleting item:', error);
+                // Revert on error
+                await fetchCart();
+            }
+        } catch (err) {
+            console.error('Failed to remove item:', err);
+            await fetchCart();
         }
     };
 

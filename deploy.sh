@@ -68,4 +68,5 @@ ssh -i $SSH_KEY_PATH $SERVER_USER@$SERVER_IP << EOF
     pm2 restart $APP_NAME || pm2 start npm --name "$APP_NAME" -- start
 
     echo "✅ Deployment Complete!"
+    echo "visit http://129.153.192.144"
 EOF

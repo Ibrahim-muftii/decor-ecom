@@ -92,18 +92,29 @@ const BottomNav = () => {
                         const isActive = activeIndex === index;
                         const isLogout = item.label === 'Logout';
 
+                        if (isLogout) {
+                            return (
+                                <button
+                                    key={item.href}
+                                    className={`${styles.navItem} ${isActive ? styles.active : ''}`}
+                                    onClick={(e) => handleLogout(e)}
+                                >
+                                    <span className={styles.iconWrapper}>
+                                        <Icon className={styles.icon} />
+                                    </span>
+                                    <span className={`${styles.label} ${isActive ? styles.showLabel : ''}`}>
+                                        {item.label}
+                                    </span>
+                                </button>
+                            );
+                        }
+
                         return (
                             <Link
                                 key={item.href}
                                 href={item.href}
                                 className={`${styles.navItem} ${isActive ? styles.active : ''}`}
-                                onClick={(e) => {
-                                    if (isLogout) {
-                                        handleLogout(e);
-                                    } else {
-                                        setActiveIndex(index);
-                                    }
-                                }}
+                                onClick={() => setActiveIndex(index)}
                             >
                                 <span className={styles.iconWrapper}>
                                     <Icon className={styles.icon} />
