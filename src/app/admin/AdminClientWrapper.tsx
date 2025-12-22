@@ -5,6 +5,7 @@ import DashboardTab from '@/components/Admin/DashboardTab';
 import ProductTable from '@/components/Admin/ProductTable';
 import ProductForm from '@/components/Admin/ProductForm';
 import OrderTable from '@/components/Admin/OrderTable';
+import UserTable from '@/components/Admin/UserTable';
 import { useRouter } from 'next/navigation';
 
 interface AdminClientWrapperProps {
@@ -12,6 +13,7 @@ interface AdminClientWrapperProps {
     dashboardData: any;
     productsData: { data: any[], count: number };
     ordersData: { data: any[], count: number };
+    usersData: { data: any[], count: number };
     currentPage: number;
     searchQuery: string;
 }
@@ -21,6 +23,7 @@ const AdminClientWrapper: React.FC<AdminClientWrapperProps> = ({
     dashboardData,
     productsData,
     ordersData,
+    usersData,
     currentPage,
     searchQuery
 }) => {
@@ -72,6 +75,15 @@ const AdminClientWrapper: React.FC<AdminClientWrapperProps> = ({
                         }}
                     />
                 </div>
+            )}
+
+            {currentTab === 'users' && (
+                <UserTable
+                    users={usersData.data}
+                    currentPage={currentPage}
+                    totalPages={Math.ceil(usersData.count / itemsPerPage)}
+                    searchQuery={searchQuery}
+                />
             )}
 
             {currentTab === 'orders' && (

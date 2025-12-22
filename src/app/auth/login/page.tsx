@@ -29,13 +29,21 @@ export default function Login() {
 
             if (signInError) throw signInError;
 
-            // Check Role
+            // Check Role and Block Status
             if (data.session?.user) {
                 const { data: profile } = await supabase
                     .from('profiles')
-                    .select('role')
+                    .select('role, is_blocked')
                     .eq('id', data.session.user.id)
                     .single();
+
+                // Check if user is blocked
+                if (profile?.is_blocked) {
+                    await supabase.auth.signOut();
+                    setError('Your account has been blocked. Please contact support.');
+                    toast.error('Account blocked. Contact support.');
+                    return;
+                }
 
                 toast.success(`Welcome back, ${email.split('@')[0]}!`);
 
@@ -77,6 +85,21 @@ export default function Login() {
                         value={password}
                         onChange={(e) => setPassword(e.target.value)}
                     />
+
+                    <div style={{ textAlign: 'right', marginTop: '-0.5rem', marginBottom: '1rem' }}>
+                        <Link
+                            href="/auth/forgot-password"
+                            style={{
+                                color: '#10b981',
+                                fontSize: '0.9rem',
+                                textDecoration: 'none',
+                                fontWeight: 500
+                            }}
+                        >
+                            Forgot Password?
+                        </Link>
+                    </div>
+
                     <GlassButton fullWidth variant="primary" disabled={loading}>
                         {loading ? 'Signing In...' : 'Sign In'}
                     </GlassButton>

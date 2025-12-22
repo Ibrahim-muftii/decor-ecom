@@ -22,8 +22,9 @@ export default async function Admin({ searchParams }: { searchParams: Promise<{ 
     const searchQuery = (resolvedSearchParams.query as string) || '';
     // Fetch Data on Server
     let dashboardData: any = null;
-    let productsData: { data: any[], count: number } = { data: [], count: 0 }; // Initialize with explicit type
+    let productsData: { data: any[], count: number } = { data: [], count: 0 };
     let ordersData: { data: any[], count: number } = { data: [], count: 0 };
+    let usersData: { data: any[], count: number } = { data: [], count: 0 };
 
     if (currentTab === 'dashboard') {
         // Parallel Data Fetching for Metrics
@@ -95,6 +96,26 @@ export default async function Admin({ searchParams }: { searchParams: Promise<{ 
         ordersData = { data: data || [], count: count || 0 };
     }
 
+    if (currentTab === 'users') {
+        const from = (pageNumber - 1) * 8;
+        const to = from + 8 - 1;
+
+        let queryBuilder = supabase
+            .from('profiles')
+            .select('id, email, role, is_blocked, is_deleted, created_at', { count: 'exact' })
+            .eq('is_deleted', false);
+
+        if (searchQuery) {
+            queryBuilder = queryBuilder.ilike('email', `%${searchQuery}%`);
+        }
+
+        const { data, count } = await queryBuilder
+            .order('created_at', { ascending: false })
+            .range(from, to);
+
+        usersData = { data: data || [], count: count || 0 };
+    }
+
     return (
         <div className={styles.pageContainer}>
             <ToastContainer position="top-right" autoClose={3000} />
@@ -115,6 +136,7 @@ export default async function Admin({ searchParams }: { searchParams: Promise<{ 
                         dashboardData={dashboardData}
                         productsData={productsData}
                         ordersData={ordersData}
+                        usersData={usersData}
                         currentPage={pageNumber}
                         searchQuery={searchQuery}
                     />

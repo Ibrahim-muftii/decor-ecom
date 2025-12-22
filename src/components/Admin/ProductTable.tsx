@@ -4,6 +4,7 @@ import React, { useState } from 'react';
 import { supabase } from '@/lib/supabaseClient';
 import { FaEdit, FaTrash, FaSearch, FaChevronLeft, FaChevronRight } from 'react-icons/fa';
 import toast from 'react-hot-toast';
+import ConfirmDialog from '@/components/ConfirmDialog/ConfirmDialog';
 import styles from './ProductTable.module.css';
 import { useRouter, useSearchParams } from 'next/navigation';
 
@@ -19,6 +20,7 @@ const ProductTable: React.FC<ProductTableProps> = ({ products, currentPage, tota
     const router = useRouter();
     const searchParams = useSearchParams();
     const [localSearch, setLocalSearch] = useState(searchQuery);
+    const [confirmDialog, setConfirmDialog] = useState({ isOpen: false, productId: '' });
 
     const handleSearch = (e: React.FormEvent) => {
         e.preventDefault();
@@ -35,8 +37,6 @@ const ProductTable: React.FC<ProductTableProps> = ({ products, currentPage, tota
     };
 
     const handleDelete = async (id: string) => {
-        if (!window.confirm('Are you sure you want to delete this product?')) return;
-
         const { error } = await supabase.from('products').delete().eq('id', id);
         if (error) {
             toast.error('Failed to delete product');
@@ -44,6 +44,11 @@ const ProductTable: React.FC<ProductTableProps> = ({ products, currentPage, tota
             toast.success('Product deleted successfully');
             router.refresh();
         }
+        setConfirmDialog({ isOpen: false, productId: '' });
+    };
+
+    const openDeleteConfirm = (id: string) => {
+        setConfirmDialog({ isOpen: true, productId: id });
     };
 
     return (
@@ -101,7 +106,7 @@ const ProductTable: React.FC<ProductTableProps> = ({ products, currentPage, tota
                                             <FaEdit />
                                         </button>
                                         <button
-                                            onClick={() => handleDelete(product.id)}
+                                            onClick={() => openDeleteConfirm(product.id)}
                                             className={`${styles.actionBtn} ${styles.deleteBtn}`}
                                             title="Delete"
                                         >
@@ -137,6 +142,17 @@ const ProductTable: React.FC<ProductTableProps> = ({ products, currentPage, tota
                     </div>
                 </div>
             )}
+
+            <ConfirmDialog
+                isOpen={confirmDialog.isOpen}
+                title="Delete Product"
+                message="Are you sure you want to delete this product? This action cannot be undone."
+                confirmText="Delete"
+                cancelText="Cancel"
+                variant="danger"
+                onConfirm={() => handleDelete(confirmDialog.productId)}
+                onCancel={() => setConfirmDialog({ isOpen: false, productId: '' })}
+            />
         </div>
     );
 };

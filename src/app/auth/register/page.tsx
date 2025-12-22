@@ -3,6 +3,7 @@
 import React, { useState } from 'react';
 import Link from 'next/link';
 import { useRouter } from 'next/navigation';
+import toast from 'react-hot-toast';
 import GlassInput from '@/components/GlassInput/GlassInput';
 import GlassButton from '@/components/GlassButton/GlassButton';
 import { supabase } from '@/lib/supabaseClient';
@@ -40,18 +41,62 @@ export default function Register() {
 
             if (signUpError) throw signUpError;
 
+            // Create profile with role='user' by default
+            if (data.user) {
+                const { error: profileError } = await supabase
+                    .from('profiles')
+                    .insert([
+                        {
+                            id: data.user.id,
+                            email: data.user.email,
+                            full_name: formData.fullName,
+                            role: 'user', // Default role for new registrations
+                        },
+                    ]);
+
+                if (profileError) {
+                    console.error('Profile creation error:', profileError);
+                }
+
+                // Send welcome email (non-blocking, errors are logged but don't prevent registration)
+                console.log('📧 Attempting to send welcome email to:', data.user.email);
+                try {
+                    const response = await fetch('/api/send-welcome-email', {
+                        method: 'POST',
+                        headers: { 'Content-Type': 'application/json' },
+                        body: JSON.stringify({
+                            email: data.user.email,
+                            name: formData.fullName || 'Valued Customer'
+                        }),
+                    });
+
+                    const responseData = await response.json();
+                    console.log('📧 Email API Response:', responseData);
+
+                    if (response.ok) {
+                        console.log('✅ Welcome email sent successfully');
+                    } else {
+                        console.error('⚠️ Welcome email failed:', response.status, responseData);
+                    }
+                } catch (emailError) {
+                    console.error('❌ Welcome email error:', emailError);
+                }
+            }
+
             if (data.session) {
                 // Auto logged in
+                toast.success('Welcome to GlassFlowers! 🌿');
                 router.push('/shop');
                 router.refresh();
             } else {
                 // Email confirmation might be required
-                alert('Registration successful! Please check your email.');
+                toast.success('Registration successful! Check your email for confirmation.');
                 router.push('/auth/login');
             }
 
         } catch (err: any) {
             setError(err.message || 'An error occurred');
+            toast.error(err.message || 'Registration failed');
         } finally {
             setLoading(false);
         }
