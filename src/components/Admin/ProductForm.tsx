@@ -2,7 +2,7 @@
 
 import React, { useState, useEffect, useRef } from 'react';
 import { supabase } from '@/lib/supabaseClient';
-import { toast } from 'react-toastify';
+import toast from 'react-hot-toast';
 import { FaCloudUploadAlt, FaTimes, FaPlus, FaSave } from 'react-icons/fa';
 import GlassInput from '@/components/GlassInput/GlassInput';
 import GlassButton from '@/components/GlassButton/GlassButton';

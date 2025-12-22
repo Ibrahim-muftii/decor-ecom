@@ -4,6 +4,7 @@ import React, { useEffect, useState } from 'react';
 import Link from 'next/link';
 import Image from 'next/image';
 import { useRouter } from 'next/navigation';
+import toast from 'react-hot-toast';
 import { FaTrash, FaArrowRight, FaMinus, FaPlus, FaTag } from 'react-icons/fa';
 import { supabase } from '@/lib/supabaseClient';
 import GlassButton from '@/components/GlassButton/GlassButton';
@@ -65,6 +66,7 @@ export default function CartClient() {
             setCartItems(formattedData);
         } catch (error) {
             console.error('Error fetching cart:', error);
+            toast.error('Failed to load cart');
         } finally {
             setLoading(false);
         }
@@ -86,31 +88,77 @@ export default function CartClient() {
 
             if (error) {
                 console.error('Error updating quantity:', error);
+                toast.error('Failed to update quantity');
                 await fetchCart(); // Revert on error
+            } else {
+                toast.success('Quantity updated');
             }
         } catch (err) {
             console.error('Failed to update quantity:', err);
+            toast.error('An error occurred');
             await fetchCart();
         }
     };
 
     const removeItem = async (itemId: string) => {
         try {
+            console.log('=== REMOVE ITEM START ===');
+            console.log('Item ID to remove:', itemId);
+
+            // Get current user to ensure we're authenticated
+            const { data: { user }, error: userError } = await supabase.auth.getUser();
+
+            if (userError) {
+                console.error('User fetch error:', userError);
+                toast.error('Authentication error');
+                return;
+            }
+
+            if (!user) {
+                console.error('No user found - cannot remove item');
+                toast.error('Please log in to modify your cart');
+                return;
+            }
+
+            console.log('User ID:', user.id);
+
+            // First verify item exists
+            const { data: checkData } = await supabase
+                .from('cart_items')
+                .select('id, user_id')
+                .eq('id', itemId)
+                .single();
+
+            console.log('Item check:', checkData);
+
             // Optimistic update
             setCartItems(items => items.filter(item => item.id !== itemId));
 
-            const { error } = await supabase
+            // Delete the item - simplified query
+            const { error, data } = await supabase
                 .from('cart_items')
                 .delete()
-                .eq('id', itemId);
+                .eq('id', itemId)
+                .select();
+
+            console.log('Delete result:', { error, data, dataLength: data?.length });
 
             if (error) {
-                console.error('Error deleting item:', error);
-                // Revert on error
+                console.error('DELETE ERROR:', error);
+                toast.error(`Failed: ${error.message}`);
                 await fetchCart();
+            } else if (!data || data.length === 0) {
+                console.error('NO ROWS DELETED - Possible RLS issue');
+                toast.error('Delete blocked - check browser console');
+                await fetchCart();
+            } else {
+                console.log('DELETE SUCCESS');
+                toast.success('Removed from cart');
             }
+            console.log('=== REMOVE ITEM END ===');
         } catch (err) {
             console.error('Failed to remove item:', err);
+            toast.error('An error occurred while removing the item');
             await fetchCart();
         }
     };

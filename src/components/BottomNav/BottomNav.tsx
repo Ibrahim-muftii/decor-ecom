@@ -3,6 +3,7 @@
 import React, { useState, useEffect } from 'react';
 import Link from 'next/link';
 import { usePathname } from 'next/navigation';
+import toast from 'react-hot-toast';
 import { FiHome, FiGrid, FiShoppingCart, FiUser, FiLogOut, FiLogIn } from 'react-icons/fi';
 import { supabase } from '@/lib/supabaseClient';
 import styles from './BottomNav.module.css';
@@ -65,8 +66,18 @@ const BottomNav = () => {
 
     const handleLogout = async (e: React.MouseEvent) => {
         e.preventDefault();
-        await supabase.auth.signOut();
-        window.location.href = '/auth/login'; // Redirect to login after logout
+        e.stopPropagation();
+
+        try {
+            await supabase.auth.signOut();
+            toast.success('Logged out successfully!');
+            // Use router.push instead of window.location to avoid reload loop
+            const { useRouter } = await import('next/navigation');
+            window.location.href = '/auth/login';
+        } catch (error) {
+            console.error('Logout error:', error);
+            toast.error('Failed to logout');
+        }
     };
 
     return (
@@ -98,6 +109,7 @@ const BottomNav = () => {
                                     key={item.href}
                                     className={`${styles.navItem} ${isActive ? styles.active : ''}`}
                                     onClick={(e) => handleLogout(e)}
+                                    data-logout="true"
                                 >
                                     <span className={styles.iconWrapper}>
                                         <Icon className={styles.icon} />

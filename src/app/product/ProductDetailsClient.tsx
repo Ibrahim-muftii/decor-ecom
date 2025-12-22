@@ -5,7 +5,7 @@ import Image from 'next/image';
 import { FaMinus, FaPlus, FaShoppingCart, FaStar, FaHeart } from 'react-icons/fa';
 import GlassButton from '../../components/GlassButton/GlassButton';
 import styles from './[id]/page.module.css';
-import { toast } from 'react-toastify';
+import toast from 'react-hot-toast';
 import { addToCart } from '@/lib/cartUtils';
 
 interface ProductDetailsClientProps {
@@ -26,7 +26,12 @@ export default function ProductDetailsClient({ product, relatedProducts }: Produ
     const decrement = () => setQuantity(q => Math.max(1, q - 1));
 
     const handleAddToCart = async () => {
-        await addToCart(product.id, quantity);
+        const result = await addToCart(product.id, quantity);
+        if (result.success) {
+            toast.success('Added to cart!');
+        } else {
+            toast.error(result.error || 'Failed to add to cart');
+        }
     };
 
     return (

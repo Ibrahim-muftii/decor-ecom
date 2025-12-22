@@ -6,8 +6,7 @@ import BottomNav from '@/components/BottomNav/BottomNav'
 import Footer from '@/components/Footer/Footer';
 import StoreProvider from '@/lib/StoreProvider'
 import AuthSync from '@/lib/AuthSync'
-import { ToastContainer } from 'react-toastify';
-import 'react-toastify/dist/ReactToastify.css';
+import { Toaster } from 'react-hot-toast';
 
 const inter = Inter({ subsets: ['latin'] })
 const outfit = Outfit({ subsets: ["latin"] });
@@ -59,7 +58,31 @@ export default function RootLayout({
             <Footer />
             <BottomNav />
           </div>
-          <ToastContainer position="bottom-right" theme="light" />
+          <Toaster
+            position="top-center"
+            toastOptions={{
+              duration: 3000,
+              style: {
+                background: 'rgba(255, 255, 255, 0.95)',
+                backdropFilter: 'blur(10px)',
+                border: '1px solid rgba(16, 185, 129, 0.2)',
+                borderRadius: '12px',
+                boxShadow: '0 4px 15px rgba(0, 0, 0, 0.1)',
+              },
+              success: {
+                iconTheme: {
+                  primary: '#10b981',
+                  secondary: '#fff',
+                },
+              },
+              error: {
+                iconTheme: {
+                  primary: '#ef4444',
+                  secondary: '#fff',
+                },
+              },
+            }}
+          />
         </StoreProvider>
       </body>
     </html>

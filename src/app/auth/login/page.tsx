@@ -3,6 +3,7 @@
 import React, { useState } from 'react';
 import Link from 'next/link';
 import { useRouter } from 'next/navigation';
+import toast from 'react-hot-toast';
 import GlassInput from '@/components/GlassInput/GlassInput';
 import GlassButton from '@/components/GlassButton/GlassButton';
 import { supabase } from '@/lib/supabaseClient';
@@ -36,16 +37,18 @@ export default function Login() {
                     .eq('id', data.session.user.id)
                     .single();
 
+                toast.success(`Welcome back, ${email.split('@')[0]}!`);
+
                 if (profile?.role === 'admin') {
                     router.push('/admin');
                 } else {
-                    // Use window.location to properly reset state/BottomNav on clean load
-                    window.location.href = '/shop';
+                    router.push('/shop');
                 }
             }
 
         } catch (err: any) {
             setError(err.message || 'Failed to sign in');
+            toast.error(err.message || 'Failed to sign in');
         } finally {
             setLoading(false);
         }

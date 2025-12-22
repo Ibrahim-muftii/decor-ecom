@@ -2,6 +2,9 @@
 	max-width: 1200px;
 	margin: 0 auto;
 	padding: 8rem 2rem 6rem;
+	overflow-x: hidden; /* Prevent horizontal scroll */
+	width: 100%;
+	box-sizing: border-box;
 }
 
 .header {
@@ -23,6 +26,9 @@
 	display: grid;
 	grid-template-columns: 1.5fr 1fr;
 	gap: 3rem;
+	width: 100%;
+	max-width: 100%;
+	box-sizing: border-box;
 }
 
 .formSection {
@@ -32,6 +38,10 @@
 	border-radius: 20px;
 	border: 1px solid rgba(255, 255, 255, 0.5);
 	box-shadow: 0 4px 6px rgba(0, 0, 0, 0.02);
+	width: 100%;
+	max-width: 100%;
+	box-sizing: border-box;
+	overflow-x: hidden;
 }
 
 .sectionTitle {
@@ -47,6 +57,9 @@
 	grid-template-columns: 1fr 1fr;
 	gap: 1.5rem;
 	margin-bottom: 2rem;
+	width: 100%;
+	max-width: 100%;
+	box-sizing: border-box;
 }
 
 .fullWidth {
@@ -57,6 +70,9 @@
 	display: flex;
 	flex-direction: column;
 	gap: 0.5rem;
+	width: 100%;
+	max-width: 100%;
+	box-sizing: border-box;
 }
 
 .label {
@@ -73,6 +89,9 @@
 	background: rgba(255, 255, 255, 0.8);
 	font-family: inherit;
 	transition: all 0.3s;
+	width: 100%;
+	max-width: 100%;
+	box-sizing: border-box;
 }
 
 .input:focus,
@@ -89,6 +108,9 @@
 
 .summarySection {
 	height: fit-content;
+	width: 100%;
+	max-width: 100%;
+	box-sizing: border-box;
 }
 
 .orderCard {
@@ -99,6 +121,9 @@
 	box-shadow: 0 10px 30px rgba(0, 0, 0, 0.05);
 	position: sticky;
 	top: 100px;
+	width: 100%;
+	max-width: 100%;
+	box-sizing: border-box;
 }
 
 .placeOrderBtn {
@@ -126,6 +151,7 @@
 @media (max-width: 900px) {
 	.layout {
 		grid-template-columns: 1fr;
+		gap: 2rem; /* Reduce gap */
 	}
 
 	.layout > div:nth-child(2) {

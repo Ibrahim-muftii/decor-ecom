@@ -3,7 +3,7 @@
 import React, { useState } from 'react';
 import { supabase } from '@/lib/supabaseClient';
 import { FaEdit, FaTrash, FaSearch, FaChevronLeft, FaChevronRight } from 'react-icons/fa';
-import { toast } from 'react-toastify';
+import toast from 'react-hot-toast';
 import styles from './ProductTable.module.css';
 import { useRouter, useSearchParams } from 'next/navigation';
 

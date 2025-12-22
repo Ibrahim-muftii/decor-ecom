@@ -1,5 +1,5 @@
 import { supabase } from '@/lib/supabaseClient';
-import { toast } from 'react-toastify';
+import toast from 'react-hot-toast';
 
 export async function addToCart(productId: string, quantity: number = 1) {
     console.log('addToCart called:', { productId, quantity });
@@ -9,14 +9,12 @@ export async function addToCart(productId: string, quantity: number = 1) {
 
         if (sessionError) {
             console.error('Session error:', sessionError);
-            toast.error('Authentication error. Please login again.');
-            return false;
+            return { success: false, error: 'Authentication error. Please login again.' };
         }
 
         if (!session?.user) {
             console.log('No user session found');
-            toast.error('Please login to add items to cart');
-            return false;
+            return { success: false, error: 'Please login to add items to cart' };
         }
 
         const user = session.user;
@@ -32,7 +30,7 @@ export async function addToCart(productId: string, quantity: number = 1) {
 
         if (fetchError) {
             console.error('Error checking existing cart item:', fetchError);
-            throw fetchError;
+            return { success: false, error: fetchError.message };
         }
 
         if (existing) {
@@ -44,7 +42,7 @@ export async function addToCart(productId: string, quantity: number = 1) {
 
             if (updateError) {
                 console.error('Error updating item:', updateError);
-                throw updateError;
+                return { success: false, error: updateError.message };
             }
         } else {
             console.log('Inserting new item');
@@ -58,16 +56,14 @@ export async function addToCart(productId: string, quantity: number = 1) {
 
             if (insertError) {
                 console.error('Error inserting item:', insertError);
-                throw insertError;
+                return { success: false, error: insertError.message };
             }
         }
 
-        toast.success('Added to cart!');
         console.log('Cart update successful');
-        return true;
+        return { success: true };
     } catch (error: any) {
         console.error('Add to cart fatal error:', error);
-        toast.error(`Failed to add to cart: ${error.message || 'Unknown error'} `);
-        return false;
+        return { success: false, error: error.message || 'Unknown error' };
     }
 }
